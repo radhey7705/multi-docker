@@ -1,0 +1,19 @@
+sudo: required
+services:
+     - docker
+before_install: 
+     - docker build -t 7705/react-test -f ./client/Dockerfile.dev ./client
+script: 
+     - docker run 7705/react-test npm test -- --coverage
+after success:
+     - docker build -t 7705/multi-client ./client
+     - docker build -t 7705/multi-server ./server
+     - docker build -t 7705/multi-worker ./worker
+     - docker build -t 7705/multi-nginx ./nginx
+     # login to travisci.org
+     - echo "$PASSWORD" | docker login -u "$USER_ID" --password-stdin 
+     # push images
+     - docker push 7705/multi-client
+     - docker push 7705/multi-server
+     - docker push 7705/multi-worker
+     - docker push 7705/multi-nginx
