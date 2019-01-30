@@ -7,8 +7,7 @@
             "hostname": "client",
             "essential": false,
             "memory": 128
-            
-        },
+         },
         {
             "name": "server",
             "image": "7705/multi-server",
@@ -34,10 +33,7 @@
                     "containerPort": 80
                 }
             ],
-            "links": [
-                "client",
-                "server"
-            ],
+            "links": ["client", "server"],
             "memory": 128
         }
     ]
